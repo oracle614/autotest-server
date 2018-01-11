@@ -1,0 +1,31 @@
+{% extends "navbar_base.html" %}
+
+{% block page_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="script-form" action="{{ url_for('main.runjmter') }}" method="post">
+                    <div class="function-button">
+                        <button class="btn btn-default" type="button">执行</button>
+                        <button class="btn btn-default" type="button">全选</button>
+                        <button class="btn btn-default" type="reset">刷新</button>
+                    </div>
+                    <div class="script-tree">
+                        <ul>
+                            {% for dirname in dirs %}
+                                <li>
+                                    <label>
+                                        <input class="checkbox-inline" value="{{ dirname }}" type="checkbox"/>
+                                    </label>
+                                    <button class="directory" type="button">
+                                        <i class="iconfont icon-folder"></i> {{ dirname }}
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

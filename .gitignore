@@ -1,0 +1,10 @@
+# virtualenv
+.venv
+venv/
+ENV/
+
+# IDEA
+.idea/
+
+# Flask-Migreta
+migrations/
