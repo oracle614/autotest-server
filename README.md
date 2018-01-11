@@ -6,7 +6,7 @@
 1. 创建虚拟环境venv：```python -m venv venv```；
 2. 安装依赖：```pip install -r requirements.txt```。
 
-#### 创建PostgreSQL数据库
+#### 创建SQLite数据库
 ##### 初始化
 1. 初始化： `.\venv\Scripts\python manage.py db init`
 2. 创建第一个版本： `.\venv\Scripts\python manage.py db migrate -m "initial migration"`

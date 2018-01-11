@@ -10,7 +10,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 from config import config
 
-bootstrap = Bootstrap()
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -20,13 +19,9 @@ login_manager.login_message_category = 'info'
 
 
 def create_app():
-    db_info = config.get('db')
-    username = db_info.get('username')
-    password = db_info.get('password')
-    host = db_info.get('host')
-    port = db_info.get('port')
-    databasename = db_info.get('databasename')
-    dburi = rf'postgresql://{username}:{password}@{host}:{port}/{databasename}'
+    sqlite_path = config.get('db').get('path')
+    dbname = config.get('db').get('name')
+    dburi = rf'sqlite:///{sqlite_path}/{dbname}'
 
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = dburi
@@ -35,7 +30,6 @@ def create_app():
     # 密钥，CSRF（跨站请求伪造）保护，通过os.urandom(24)生成
     app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
-    bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
 

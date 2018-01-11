@@ -21,11 +21,9 @@ PROJECT_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 config = {
     'db':         {
-        'username':     'postgres',
-        'password':     '123456',
-        'host':         'localhost',
-        'port':         '5432',
-        'databasename': 'postgres'
+        'path': PROJECT_ROOT_DIR,
+        'name': 'database'
+
     },
     'jmeter':     {
         'jmeterhome': r'F:\Jmeter\apache-jmeter-3.1-interface',

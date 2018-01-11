@@ -15,23 +15,6 @@ from config import config
 logger = getlogger(__name__)
 
 
-class Response:
-    __slots__ = ('__result', '__success', '__errorcode', '__errormsg')
-
-    def __init__(self, result, success=False, errorcode=0, errormsg='failure'):
-        """
-        接口响应基类
-        :param result: 响应结果
-        :param success: True or False
-        :param errorcode: 响应码， 0：失败， 1：成功
-        :param errormsg: success or failure
-        """
-        self.__result = result
-        self.__success = success
-        self.__errorcode = errorcode
-        self.__errormsg = errormsg
-
-
 @main.route('/api/getdirandscript', methods=['GET'])
 # @login_required
 def getdirandscript():

@@ -46,27 +46,3 @@ def run():
     workspace = config.get('jmeter').get('workspace')
     dirs = get_dirname_list(workspace)
     return render_template('run.html', dirs=dirs)
-
-
-@main.route('/script')
-@login_required
-def script():
-    return render_template('script.html')
-
-
-@main.route('/edit')
-@login_required
-def edit():
-    return render_template('edit.html')
-
-
-@main.route('/report')
-@login_required
-def report():
-    return render_template('report.html')
-
-
-@main.route('/log')
-@login_required
-def log():
-    return render_template('log.html')
