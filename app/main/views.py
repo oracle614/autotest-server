@@ -3,7 +3,6 @@
 # @Time    : 2017/10/20 16:49
 # @Author  : KelvinYe
 
-from datetime import datetime
 
 from flask import render_template, request, url_for, flash
 from flask_login import login_user, logout_user, login_required
@@ -16,7 +15,7 @@ from app.models import User
 from config import config
 
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/login', methods=['POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -26,11 +25,6 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid username or password.')
     return render_template('login.html', form=form)
-
-
-@main.route('/index')
-def index():
-    return render_template('index.html', current_time=datetime.utcnow())
 
 
 @main.route('/logout')

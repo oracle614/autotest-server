@@ -7,7 +7,7 @@ import json
 from flask import request, jsonify
 from flask_login import login_required
 
-from app.common.common import get_dirname_list, get_dir_abspath, get_scriptname_list
+from app.common.common import get_dirname_list, dirname_to_abspath, get_scriptname_list
 from app.common.log import getlogger
 from app.main import main
 from config import config
@@ -15,12 +15,12 @@ from config import config
 logger = getlogger(__name__)
 
 
-@main.route('/api/getdirandscript', methods=['GET'])
+@main.route('/api/jmeter/getscript', methods=['GET'])
 # @login_required
 def getdirandscript():
     workspace = config.get('jmeter').get('workspace')
     dir_name = request.args.get('dirname')
-    dir_abspath = get_dir_abspath(workspace, dir_name)
+    dir_abspath = dirname_to_abspath(workspace, dir_name)
     logger.debug(f'dir_name={dir_name}')
     logger.debug(f'dir_abspath={dir_abspath}')
 

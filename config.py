@@ -3,20 +3,9 @@
 # @Time    : 2017/10/20 15:24
 # @Author  : KelvinYe
 
-from configparser import ConfigParser
 
 import os
 
-# config = ConfigParser()
-# config.read(os.path.abspath(os.path.dirname(__file__)) + r'\local.config')
-#
-#
-# def getconfig(section, option):
-#     return config.get(section, option)
-#
-#
-# def getconfigint(section, option):
-#     return config.getint(section, option)
 PROJECT_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 config = {
