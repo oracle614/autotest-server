@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2017/11/1 17:38
 # @Author  : KelvinYe
+import json
 import os
 
 from config import config
@@ -76,9 +77,43 @@ def get_scriptname_list(rootdir):
 
 
 def get_script_tree(rootdir):
-    pass
+    """
+    递归获取文件树数据，以json报文返回
+    """
+    response = []
+    for dirname in listdir(rootdir):
+        dir_abspath = os.path.join(rootdir, dirname)
+        filetype = get_filetype(dir_abspath)
+        child = None
+        if os.path.isdir(dir_abspath):
+            child = (get_script_tree(os.path.join(rootdir, dirname)))
+        response.append(file_dto(dirname, filetype, child))
+    return response
 
 
-if __name__ == '__main__':
-    workspace = config.get('jmeter').get('workspace')
-    print(dirname_to_abspath(workspace, 'BindCardFacade'))
+def file_dto(name=None, filetype=None, child=None):
+    return {'name':     name,
+            'filetype': filetype,
+            'child':    child}
+
+
+def listdir(dirpath):
+    """
+    返回指定目录下的所有文件和目录名
+    """
+    return os.listdir(dirpath)
+
+
+def get_filetype(filepath):
+    filetype = None
+    if os.path.isdir(filepath):
+        filetype = 'dir'
+    elif isjmx(filepath):
+        filetype = 'script'
+    return filetype
+
+
+# if __name__ == '__main__':
+#     workspace = config.get('jmeter').get('workspace')
+#     # print(dirname_to_abspath(workspace, 'BindCardFacade'))
+#     print(get_script_tree(workspace))

@@ -4,9 +4,9 @@
 # @Author  : KelvinYe
 
 from flask import Flask
-from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import *
 
 from config import config
 
@@ -24,6 +24,7 @@ def create_app():
     dburi = rf'sqlite:///{sqlite_path}/{dbname}'
 
     app = Flask(__name__)
+    CORS(app, supports_credentials=True)  # 跨域解决方案
     app.config['SQLALCHEMY_DATABASE_URI'] = dburi
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

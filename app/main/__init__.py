@@ -7,4 +7,4 @@ from flask import Blueprint
 
 main = Blueprint('main', __name__)
 
-from . import errors, forms, views, api
+from . import forms, views, api

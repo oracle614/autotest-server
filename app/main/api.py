@@ -7,7 +7,7 @@ import json
 from flask import request, jsonify
 from flask_login import login_required
 
-from app.common.common import get_dirname_list, dirname_to_abspath, get_scriptname_list
+from app.common.common import *
 from app.common.log import getlogger
 from app.main import main
 from config import config
@@ -17,19 +17,13 @@ logger = getlogger(__name__)
 
 @main.route('/api/jmeter/getscript', methods=['GET'])
 # @login_required
-def getdirandscript():
+def getscript():
     workspace = config.get('jmeter').get('workspace')
-    dir_name = request.args.get('dirname')
-    dir_abspath = dirname_to_abspath(workspace, dir_name)
-    logger.debug(f'dir_name={dir_name}')
-    logger.debug(f'dir_abspath={dir_abspath}')
+    response = get_script_tree(workspace)
+    logger.debug(rf'workspace={workspace}')
+    logger.debug(rf'response={response}')
 
-    dirlist = get_dirname_list(dir_abspath)
-    scriptlist = get_scriptname_list(dir_abspath)
-    logger.debug(f'dirlist={dirlist}')
-    logger.debug(f'scriptlist={scriptlist}')
-
-    return jsonify({'dirlist': dirlist, 'scriptlist': scriptlist})
+    return jsonify(json.dumps(response))
 
 
 @main.route('/api/runjmter', methods=['POST'])
