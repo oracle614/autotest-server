@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2017/11/17 11:24
 # @Author  : KelvinYe
-import json
 
 from flask import request, jsonify
 from flask_login import login_required
@@ -26,7 +25,7 @@ def getscript():
     return jsonify(json.dumps(response))
 
 
-@main.route('/api/runjmter', methods=['POST'])
+@main.route('/api/jmeter/run', methods=['POST'])
 # @login_required
 def runjmter():
     script_type = request.form.get('scriptType')
