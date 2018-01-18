@@ -83,18 +83,17 @@ def get_script_tree(rootdir):
     response = []
     for dirname in listdir(rootdir):
         dir_abspath = os.path.join(rootdir, dirname)
-        filetype = get_filetype(dir_abspath)
         child = None
         if os.path.isdir(dir_abspath):
-            child = (get_script_tree(os.path.join(rootdir, dirname)))
-        response.append(file_dto(dirname, filetype, child))
+            child_res = get_script_tree(dir_abspath)
+            if child_res:
+                child = child_res
+        response.append(file_dto(dirname, child))
     return response
 
 
-def file_dto(name=None, filetype=None, child=None):
-    return {'name':     name,
-            'filetype': filetype,
-            'child':    child}
+def file_dto(name=None, child=None):
+    return {'name': name, 'child': child}
 
 
 def listdir(dirpath):
@@ -102,16 +101,6 @@ def listdir(dirpath):
     返回指定目录下的所有文件和目录名
     """
     return os.listdir(dirpath)
-
-
-def get_filetype(filepath):
-    filetype = None
-    if os.path.isdir(filepath):
-        filetype = 'dir'
-    elif isjmx(filepath):
-        filetype = 'script'
-    return filetype
-
 
 # if __name__ == '__main__':
 #     workspace = config.get('jmeter').get('workspace')

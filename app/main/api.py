@@ -19,7 +19,6 @@ logger = getlogger(__name__)
 def getscript():
     workspace = config.get('jmeter').get('workspace')
     response = get_script_tree(workspace)
-    logger.debug(rf'workspace={workspace}')
     logger.debug(rf'response={response}')
 
     return jsonify(json.dumps(response))
