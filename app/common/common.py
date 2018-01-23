@@ -20,7 +20,7 @@ def get_script_abspath_list(rootdir):
     return jmxs
 
 
-def scriptname_to_abspath(rootdir, scriptname):
+def get_abspath_by_scriptname(rootdir, scriptname):
     """
     搜索 rootdir目录及子目录下 scriptname脚本的绝对路径
     """
@@ -33,15 +33,28 @@ def scriptname_to_abspath(rootdir, scriptname):
     return abspath
 
 
-def dirname_to_abspath(rootdir, dir_name):
+def get_abspath_by_dirname(rootdir, dirname):
     """
-    搜索 rootdir目录及子目录下 dir_name目录的绝对路径
+    搜索 rootdir目录及子目录下 dirname目录的绝对路径
     """
     abspath = ''
     for root, dirs, files in os.walk(rootdir):
-        for d in dirs:
-            if dir_name == d:
-                abspath = os.path.join(root, d)
+        for name in dirs:
+            if dirname == name:
+                abspath = os.path.join(root, name)
+                break
+    return abspath
+
+
+def get_script_abspath_by_keyword(rootdir, keyword):
+    """
+    搜索 rootdir目录及子目录下 含有 keyword 脚本名的绝对路径
+    """
+    abspath = ''
+    for root, dirs, files in os.walk(rootdir):
+        for name in files:
+            if keyword in name:
+                abspath = os.path.join(root, name)
                 break
     return abspath
 
@@ -81,14 +94,21 @@ def get_script_tree(rootdir):
     递归获取文件树数据，以json报文返回
     """
     response = []
-    for dirname in listdir(rootdir):
-        dir_abspath = os.path.join(rootdir, dirname)
+    for name in listdir(rootdir):
+        if name == 'csv':
+            # 过滤csv文件
+            continue
+        dir_abspath = os.path.join(rootdir, name)
+        if isjmx(name):
+            name = name.split('.')[1]
         child = None
         if os.path.isdir(dir_abspath):
+            # 如果是文件夹则递归获取文件夹内容
             child_res = get_script_tree(dir_abspath)
             if child_res:
+                # 如文件夹下有内容则返回list，无则为None
                 child = child_res
-        response.append(file_dto(dirname, child))
+        response.append(file_dto(name, child))
     return response
 
 
@@ -104,5 +124,6 @@ def listdir(dirpath):
 
 # if __name__ == '__main__':
 #     workspace = config.get('jmeter').get('workspace')
-#     # print(dirname_to_abspath(workspace, 'BindCardFacade'))
+#     print(dirname_to_abspath(workspace, 'BindCardFacade'))
 #     print(get_script_tree(workspace))
+#     print(get_script_abspath_by_keyword(workspace, 'closeAgree'))
