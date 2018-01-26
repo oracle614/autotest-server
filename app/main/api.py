@@ -27,9 +27,8 @@ def getscript():
 @main.route('/api/jmeter/run', methods=['POST'])
 # @login_required
 def runjmter():
-    script_type = request.form.get('scriptType')
-    script_value = request.form.get('scriptValue')
-    logger.debug(f'script_type={script_type}')
-    logger.debug(f'script_value={script_value}')
+    if request.method == 'POST':
+        scripts = request.form.get('scriptType')
+        logger.debug(f'scripts={scripts}')
 
-    return 'runjmter'
+    # return 'runjmter'
