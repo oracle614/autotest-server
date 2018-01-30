@@ -6,6 +6,9 @@ import json
 import os
 
 from config import config
+from app.common.log import getlogger
+
+logger = getlogger(__name__)
 
 
 def get_script_abspath_list(rootdir):
