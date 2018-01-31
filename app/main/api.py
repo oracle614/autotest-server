@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2017/11/17 11:24
 # @Author  : KelvinYe
-
+import time
 from flask import request, jsonify
 from flask_login import login_required
 
 from app.common.common import *
+from app.common.jmeter import Jmeter, Env
 from app.common.log import getlogger
 from app.main import main
 from config import config
@@ -29,9 +30,18 @@ def getscript():
 def runjmter():
     logger.debug('有进来吗？')
     if request.method == 'POST':
-        env = request.form.get('env')
+        env = Env.get_testenv(request.form.get('env'))
         script_list = request.form.get('scriptList')
-        logger.debug(f'scripts={env}')
+        jmeterbin = config.get('jmeter').get('jmeterbin')
+        currenttime = time.strftime('%Y%m%d%H%M%S', time.localtime())
+        reportname = rf'../htmlreport/{currenttime}.html'
+        logger.debug(f'env={env}')
         logger.debug(f'scriptList={script_list}')
+        logger.debug(f'reportname={reportname}')
+
+        os.chdir(jmeterbin)  # 设置脚本执行路径为jmeter/bin
+        jmeter = Jmeter(env, reportname, jmeterbin)
+        for script in script_list:
+            jmeter.execute(script)
 
         return 'runjmter'

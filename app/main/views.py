@@ -10,24 +10,22 @@ from werkzeug.utils import redirect
 
 from app.common.common import get_dirname_list
 from app.main import main
-from app.main.forms import LoginForm
 from app.models import User
 from config import config
 
 
-@main.route('/login', methods=['POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(loginName=form.loginName.data).first()
-        datax = request.form.to_dict()
-        usernamx = datax.get('username')
-        passwordx = datax.get('password')
-        if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
-        flash('Invalid username or password.')
-    return render_template('login.html', form=form)
+# @main.route('/login', methods=['POST'])
+# def login():
+#     if form.validate_on_submit():
+#         user = User.query.filter_by(loginName=form.loginName.data).first()
+#         datax = request.form.to_dict()
+#         usernamx = datax.get('username')
+#         passwordx = datax.get('password')
+#         if user is not None and user.verify_password(form.password.data):
+#             login_user(user, form.remember_me.data)
+#             return redirect(request.args.get('next') or url_for('main.index'))
+#         flash('Invalid username or password.')
+#     return render_template('login.html', form=form)
 
 
 @main.route('/logout')
