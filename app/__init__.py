@@ -6,7 +6,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import *
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 
 from config import config
 
@@ -18,7 +18,7 @@ login_manager.login_view = 'main.login'
 login_manager.login_message = '请先登录'
 login_manager.login_message_category = 'info'
 
-socketio = SocketIO()
+socket = SocketIO()
 
 
 def create_app():
@@ -35,7 +35,7 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-    socketio.init_app(app)
+    socket.init_app(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

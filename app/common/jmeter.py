@@ -7,7 +7,7 @@ from enum import Enum
 from subprocess import Popen, PIPE, STDOUT
 
 from app.common.log import getlogger
-from app import socketio
+from app import socket
 
 logger = getlogger(__name__)
 
@@ -25,12 +25,12 @@ class Jmeter:
             line = line.strip()
             if line:
                 logger.debug(line)
-                socketio.emit('log', line)
+                socket.emit('log', line)
         if popen.returncode == 0:
             logger.debug('Command execution success')
         else:
             logger.debug('Command execution failed')
-        socketio.emit('disconnect')
+        socket.emit('disconnect')
 
 
 class Env(Enum):
