@@ -5,8 +5,8 @@
 import time
 
 import os
-
-from app import socket, emit
+from flask_socketio import emit
+from app import socket
 from app.common.jmeter import Env, Jmeter
 from app.common.log import getlogger
 from config import config
@@ -44,8 +44,8 @@ def runjmeter(request):
     logger.debug(f'scriptList={script_list}')
     logger.debug(f'reportname={reportname}')
 
-    os.chdir(jmeterbin)  # 设置脚本执行路径为jmeter/bin
+    # os.chdir(jmeterbin)  # 设置脚本执行路径为jmeter/bin
 
-    jmeter = Jmeter(env, reportname, jmeterbin)
-    for script in script_list:
-        jmeter.execute(script)
+    # jmeter = Jmeter(env, reportname, jmeterbin)
+    # for script in script_list:
+    #     jmeter.execute(script)

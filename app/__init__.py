@@ -6,7 +6,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import *
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 from config import config
 

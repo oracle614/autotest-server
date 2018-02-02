@@ -5,6 +5,7 @@
 import os
 from enum import Enum
 from subprocess import Popen, PIPE, STDOUT
+from flask_socketio import emit
 
 from app.common.log import getlogger
 from app import socket
@@ -25,12 +26,12 @@ class Jmeter:
             line = line.strip()
             if line:
                 logger.debug(line)
-                socket.emit('log', line)
+                emit('realtimelog', line)
         if popen.returncode == 0:
             logger.debug('Command execution success')
         else:
             logger.debug('Command execution failed')
-        socket.emit('disconnect')
+        emit('disconnect')
 
 
 class Env(Enum):

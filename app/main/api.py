@@ -15,32 +15,33 @@ from config import config
 logger = getlogger(__name__)
 
 
-@main.route('/api/jmeter/getscript', methods=['GET'])
+@main.route('/api/jmeter/gettree', methods=['GET'])
 # @login_required
-def getscript():
+def gettree():
     workspace = config.get('jmeter').get('workspace')
-    response = get_script_tree(workspace)
+    dirname = request.args.get('dirname')
+    treepath = get_abspath_by_dirname(workspace, dirname)
+    response = get_script_tree(treepath)
     logger.debug(rf'response={response}')
 
     return jsonify(json.dumps(response))
 
-
-@main.route('/api/jmeter/run', methods=['POST'])
+# @main.route('/api/jmeter/run', methods=['POST'])
 # @login_required
-def runjmter():
-    if request.method == 'POST':
-        env = Env.get_testenv(request.form.get('env'))
-        script_list = request.form.get('scriptList')
-        jmeterbin = config.get('jmeter').get('jmeterbin')
-        currenttime = time.strftime('%Y%m%d%H%M%S', time.localtime())
-        reportname = rf'../htmlreport/{currenttime}.html'
-        logger.debug(f'env={env}')
-        logger.debug(f'scriptList={script_list}')
-        logger.debug(f'reportname={reportname}')
-
-        os.chdir(jmeterbin)  # 设置脚本执行路径为jmeter/bin
-        jmeter = Jmeter(env, reportname, jmeterbin)
-        for script in script_list:
-            jmeter.execute(script)
-
-        return 'runjmter'
+# def runjmter():
+#     if request.method == 'POST':
+#         env = Env.get_testenv(request.form.get('env'))
+#         script_list = request.form.get('scriptList')
+#         jmeterbin = config.get('jmeter').get('jmeterbin')
+#         currenttime = time.strftime('%Y%m%d%H%M%S', time.localtime())
+#         reportname = rf'../htmlreport/{currenttime}.html'
+#         logger.debug(f'env={env}')
+#         logger.debug(f'scriptList={script_list}')
+#         logger.debug(f'reportname={reportname}')
+#
+#         os.chdir(jmeterbin)  # 设置脚本执行路径为jmeter/bin
+#         jmeter = Jmeter(env, reportname, jmeterbin)
+#         for script in script_list:
+#             jmeter.execute(script)
+#
+#         return 'runjmter'

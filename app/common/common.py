@@ -103,7 +103,7 @@ def get_script_tree(rootdir):
             continue
         dir_abspath = os.path.join(rootdir, name)
         if isjmx(name):
-            name = name.split('.')[1]
+            name = name[:-4]
         child = None
         if os.path.isdir(dir_abspath):
             # 如果是文件夹则递归获取文件夹内容

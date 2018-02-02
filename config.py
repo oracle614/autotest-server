@@ -17,7 +17,7 @@ config = {
     'jmeter':     {
         'jmeterhome': r'F:\Jmeter\apache-jmeter-3.1-interface',
         'jmeterbin':  r'F:\Jmeter\apache-jmeter-3.1-interface\bin',
-        'workspace':  r'F:\Jmeter\works\inf'
+        'workspace':  r'F:\Jmeter\works'
     },
     # 密钥，CSRF（跨站请求伪造）保护，通过os.urandom(24)生成
     'SECRET_KEY': b'\xaa\xe9\x06\xd3Oe\xfa-M\x93\xc5$\xe2\xf4\xd6\x99D\xafui\xc3H\x1eL',
